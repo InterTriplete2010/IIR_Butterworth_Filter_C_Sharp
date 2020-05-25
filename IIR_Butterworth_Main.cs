@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +18,7 @@ namespace IIR_Butterworth_C_Sharp
 
         static void Main(string[] args)
         {
+
             IIR_Butterworth_Interface IBI = new IIR_Butterworth_C_Sharp.IIR_Butterworth_Implementation();
 
             double f1 = 1;  //High Pass
@@ -27,6 +28,7 @@ namespace IIR_Butterworth_C_Sharp
             double Nyquist_F = sf / 2;
 
             double[][] coeff_final = new double[2][];
+            bool stability_check;
 
             int type_filt = 3;
             
@@ -49,6 +51,23 @@ namespace IIR_Butterworth_C_Sharp
 
                     coeff_final = IBI.Lp2bp(f1 / Nyquist_F, f2 / Nyquist_F, order_filt);
 
+                    stability_check = IBI.Check_stability_iir(coeff_final);
+
+                    if (stability_check)
+                    {
+
+                        Console.Write("The filter is stable");
+                        Console.Write("\n");
+
+                    }
+
+                    else
+                    {
+
+                        Console.Write("The filter is unstable");
+                        Console.Write("\n");
+
+                    }
 
                     for (int kk = 0; kk < 2; kk++)
                     {
@@ -95,6 +114,23 @@ namespace IIR_Butterworth_C_Sharp
 
                     coeff_final = IBI.Lp2bs(f1 / Nyquist_F, f2 / Nyquist_F, order_filt);
 
+                    stability_check = IBI.Check_stability_iir(coeff_final);
+
+                    if (stability_check)
+                    {
+
+                        Console.Write("The filter is stable");
+                        Console.Write("\n");
+
+                    }
+
+                    else
+                    {
+
+                        Console.Write("The filter is unstable");
+                        Console.Write("\n");
+
+                    }
 
                     for (int kk = 0; kk < 2; kk++)
                     {
@@ -140,6 +176,23 @@ namespace IIR_Butterworth_C_Sharp
 
                     coeff_final = IBI.Lp2hp(f2 / Nyquist_F, order_filt);
 
+                    stability_check = IBI.Check_stability_iir(coeff_final);
+
+                    if (stability_check)
+                    {
+
+                        Console.Write("The filter is stable");
+                        Console.Write("\n");
+
+                    }
+
+                    else
+                    {
+
+                        Console.Write("The filter is unstable");
+                        Console.Write("\n");
+
+                    }
 
                     for (int kk = 0; kk < 2; kk++)
                     {
@@ -185,6 +238,23 @@ namespace IIR_Butterworth_C_Sharp
 
                     coeff_final = IBI.Lp2lp(f1 / Nyquist_F, order_filt);
 
+                    stability_check = IBI.Check_stability_iir(coeff_final);
+
+                    if (stability_check)
+                    {
+
+                        Console.Write("The filter is stable");
+                        Console.Write("\n");
+
+                    }
+
+                    else
+                    {
+
+                        Console.Write("The filter is unstable");
+                        Console.Write("\n");
+
+                    }
 
                     for (int kk = 0; kk < 2; kk++)
                     {
