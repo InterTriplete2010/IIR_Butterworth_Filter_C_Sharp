@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
@@ -270,7 +270,7 @@ namespace IIR_Butterworth_C_Sharp
 
             Complex[] coeff_pol_ff = new Complex[row_col + 1];
             Matrix<Complex> temp_val = Matrix<Complex>.Build.Dense(1, 1);
-            int num_det;
+            int num_det = 0;
             Matrix<Complex> temp_matr = Matrix<Complex>.Build.Dense(row_col, row_col);
 
             for (int kk = 0; kk < row_col + 1; kk++)
@@ -287,10 +287,52 @@ namespace IIR_Butterworth_C_Sharp
                 else
                 {
 
-                    temp_val[0, 0] = 0;
-                    num_det = factorial(row_col) / (factorial(row_col - kk) * factorial(kk));  //Calculate the number of combinations   
+                    int[][] matrix_comb;
 
-                    int[][] matrix_comb = new int[num_det][];
+                    temp_val[0, 0] = 0;
+                    try
+                    {
+
+                        num_det = factorial(row_col) / (factorial(row_col - kk) * factorial(kk));  //Calculate the number of combinations   
+
+                    }
+
+                    //If the DivideByZero exception is thrown, the filter is unstable. The method returns a default value of 10^10 for the coefficients.
+                    catch (System.DivideByZeroException)
+                    {
+
+                        for (int ll = 0; ll < row_col + 1; ll++)
+                        {
+
+                            coeff_pol_ff[ll] = Math.Pow(10, 10);
+
+                        }
+
+                        break;
+
+                    }
+
+                    try
+                    {
+
+                        matrix_comb = new int[num_det][];
+
+                    }
+
+                    //If the numerical overflow exception is thrown, the filter is unstable. The method returns a default value of 10^10 for the coefficients.
+                    catch(System.OverflowException)
+                    {
+
+                        for(int ll = 0; ll < row_col + 1; ll++)
+                        {
+
+                            coeff_pol_ff[ll] = Math.Pow(10,10);
+
+                        }
+
+                        break;
+
+                    }
 
                     for (int ll = 0; ll < num_det; ll++)
                     {
@@ -1509,6 +1551,42 @@ namespace IIR_Butterworth_C_Sharp
                 save_filt_coeff[0][kk] = num_filt[kk];
 
             }
+
+        }
+
+        public bool Check_stability_iir(double[][] coeff_filt)
+        {
+            bool stability_flag = true;
+            
+            
+            //Coefficients need to be organized in ascending order
+            double[] temp_coeff_den = new double[coeff_filt[1].Length];
+            for (int kk = 0; kk < coeff_filt[1].Length; kk++)
+            {
+
+                temp_coeff_den[kk] = coeff_filt[1][coeff_filt[1].Length - 1 - kk];
+
+            }
+
+            Complex[] roots_den = FindRoots.Polynomial(temp_coeff_den);
+
+            double[] magnitude_roots_den = new double[roots_den.Length];
+
+            for (int kk = 0; kk < roots_den.Length; kk++)
+            {
+
+                magnitude_roots_den[kk] = Complex.Abs(roots_den[kk]);
+
+                if (magnitude_roots_den[kk] >= 1)
+                {
+
+                    stability_flag = false;
+                    break;
+                }
+
+            }
+            
+            return stability_flag;
 
         }
     }
