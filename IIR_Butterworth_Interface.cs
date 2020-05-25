@@ -54,7 +54,8 @@ namespace IIR_Butterworth_C_Sharp
         //Estimate the coeffients of a low-pass filter and return a 2 rows x N coefficients matrix. Row 1 = Numerator; Row 2 = Denumerator
         double[][] Lp2lp(double W_f2, int order_filt);
 
-        
+        //Check the stability of the filter. It returns true if the filter is atable, false if it is unstable
+        bool Check_stability_iir(double[][] coeff_filt);
 
     }
 }
