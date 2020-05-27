@@ -27,8 +27,7 @@ namespace IIR_Butterworth_C_Sharp
         //Calculate the factorial of the given number
         int Factorial(int i);
 
-        //Method to calculate all the possible combinations. Code taken and slightly modified from: 
-        //http://rosettacode.org/wiki/Combinations#C.2B.2B
+        //Method to calculate all the possible combinations
         int[][] Combination_method(int K, int N, int comb_n);
 
         //Transform to state-space
