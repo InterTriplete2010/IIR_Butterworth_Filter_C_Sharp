@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
@@ -56,6 +56,9 @@ namespace IIR_Butterworth_C_Sharp
 
         //Check the stability of the filter. It returns true if the filter is atable, false if it is unstable
         bool Check_stability_iir(double[][] coeff_filt);
+
+        //Filter the data by using the Direct-Form II Transpose, as explained in the Matlab documentation
+        double[] Filter_Data(double[][] coeff_filt, double[] pre_filt_signal);
 
     }
 }
