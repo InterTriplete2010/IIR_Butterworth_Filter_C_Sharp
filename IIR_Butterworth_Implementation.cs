@@ -25,7 +25,7 @@ namespace IIR_Butterworth_C_Sharp
         Complex complex_real = new Complex(1.0, 0.0);
         Complex complex_imag = new Complex(0.0, 1.0);
         Complex[] p;
-        
+
 
         int temp_dim_arr_matr;
         Matrix<Complex> a;
@@ -33,7 +33,7 @@ namespace IIR_Butterworth_C_Sharp
         Complex[] c;
 
         double d;
-        
+
         Matrix<Complex> a_arma;
         Matrix<Complex> b_arma;
         Matrix<Complex> c_arma;
@@ -320,13 +320,13 @@ namespace IIR_Butterworth_C_Sharp
                     }
 
                     //If the numerical overflow exception is thrown, the filter is unstable. The method returns a default value of 10^10 for the coefficients.
-                    catch(System.OverflowException)
+                    catch (System.OverflowException)
                     {
 
-                        for(int ll = 0; ll < row_col + 1; ll++)
+                        for (int ll = 0; ll < row_col + 1; ll++)
                         {
 
-                            coeff_pol_ff[ll] = Math.Pow(10,10);
+                            coeff_pol_ff[ll] = Math.Pow(10, 10);
 
                         }
 
@@ -343,7 +343,7 @@ namespace IIR_Butterworth_C_Sharp
 
 
                     // Generate the combinations 
-                    matrix_comb = Combination_method(row_col,kk, num_det);
+                    matrix_comb = Combination_method(row_col, kk, num_det);
 
                     for (int mm = 0; mm < num_det; mm++)
 
@@ -429,7 +429,7 @@ namespace IIR_Butterworth_C_Sharp
                 matrix_comb_f[hh] = new int[K];
 
             }
-            
+
             //Save the combinations in a 2D array
             for (int hh = 0; hh < matrix_comb_f_temp.Length; hh++)
             {
@@ -534,13 +534,13 @@ namespace IIR_Butterworth_C_Sharp
             // H(s) = 1 / (s ^ 2 + den(2)s + den(3))
             Complex[] temp_poly_p;
 
-            
+
             if (order_filt > 1)
             {
 
                 double[] b1 = new double[] { 1, 0 };
                 double[] c1 = new double[] { 0, 1 };
-                
+
                 Math.DivRem(order_filt, 2, out int rem_div);
                 temp_rem = (double)rem_div;
                 int order_filt_temp;
@@ -853,6 +853,22 @@ namespace IIR_Butterworth_C_Sharp
         public double[][] Lp2bp(double W_f1, double W_f2, int order_filt)
         {
 
+            //Check that the normalized frequencies are within the correct range of values
+            if (W_f1 <= 0 | W_f1 >= 1 | W_f2 <= 0 | W_f2 >= 1)
+            {
+
+                throw new Exception("Cut-off frequencies must be in the (0,1) range");
+
+            }
+
+            //Check that the order of the filter is > 0
+            if (order_filt <= 0)
+            {
+
+                throw new Exception("The order of the filter must be > 0");
+
+            }
+
             if (!(save_filt_coeff == null))
             {
 
@@ -881,7 +897,7 @@ namespace IIR_Butterworth_C_Sharp
                 }
 
             }
-            
+
             int type_filt = 0;
 
             //Step 1: get analog, pre - warped frequencies
@@ -944,7 +960,7 @@ namespace IIR_Butterworth_C_Sharp
 
                         {
 
-                            a_arma[kk, ll] = Wn * a[kk,ll] / q;
+                            a_arma[kk, ll] = Wn * a[kk, ll] / q;
 
                         }
 
@@ -970,7 +986,7 @@ namespace IIR_Butterworth_C_Sharp
 
             }
 
-            
+
             //Step 5: Use Bilinear transformation to find discrete equivalent
             Bilinear(a_arma, b_arma, c_arma, d_arma, fs, type_filt);
 
@@ -984,6 +1000,22 @@ namespace IIR_Butterworth_C_Sharp
         //Estimate the coeffients of a band-stop filter and return a 2 rows x N coefficients matrix. Row 1 = Numerator; Row 2 = Denumerator
         public double[][] Lp2bs(double W_f1, double W_f2, int order_filt)
         {
+
+            //Check that the normalized frequencies are within the correct range of values
+            if (W_f1 <= 0 | W_f1 >= 1 | W_f2 <= 0 | W_f2 >= 1)
+            {
+
+                throw new Exception("Cut-off frequencies must be in the (0,1) range");
+
+            }
+
+            //Check that the order of the filter is > 0
+            if (order_filt <= 0)
+            {
+
+                throw new Exception("The order of the filter must be > 0");
+
+            }
 
             if (!(save_filt_coeff == null))
             {
@@ -1066,7 +1098,7 @@ namespace IIR_Butterworth_C_Sharp
                 for (int ll = 0; ll < temp_dim_arr_matr; ll++)
                 {
 
-                    a_arma_pinv[kk, ll] = a[kk,ll];
+                    a_arma_pinv[kk, ll] = a[kk, ll];
 
                 }
 
@@ -1140,6 +1172,23 @@ namespace IIR_Butterworth_C_Sharp
         //Estimate the coeffients of a high-pass filter and return a 2 rows x N coefficients matrix. Row 1 = Numerator; Row 2 = Denumerator
         public double[][] Lp2hp(double W_f1, int order_filt)
         {
+
+            //Check that the normalized frequencies are within the correct range of values
+            if (W_f1 <= 0 | W_f1 >= 1)
+            {
+
+                throw new Exception("Cut-off frequencies must be in the (0,1) range");
+
+            }
+
+            //Check that the order of the filter is > 0
+            if (order_filt <= 0)
+            {
+
+                throw new Exception("The order of the filter must be > 0");
+
+            }
+
 
             if (!(save_filt_coeff == null))
             {
@@ -1240,6 +1289,22 @@ namespace IIR_Butterworth_C_Sharp
         public double[][] Lp2lp(double W_f2, int order_filt)
         {
 
+            //Check that the normalized frequencies are within the correct range of values
+            if (W_f2 <= 0 | W_f2 >= 1)
+            {
+
+                throw new Exception("Cut-off frequencies must be in the (0,1) range");
+
+            }
+
+            //Check that the order of the filter is > 0
+            if (order_filt <= 0)
+            {
+
+                throw new Exception("The order of the filter must be > 0");
+
+            }
+
             if (!(save_filt_coeff == null))
             {
 
@@ -1311,13 +1376,13 @@ namespace IIR_Butterworth_C_Sharp
                 for (int ll = 0; ll < temp_dim_arr_matr; ll++)
                 {
 
-                    a_arma[kk, ll] = a[kk,ll];
+                    a_arma[kk, ll] = a[kk, ll];
 
                 }
 
             }
 
-           
+
             b_arma = Wn * b_arma;
             a_arma = Wn * a_arma;
 
@@ -1332,7 +1397,7 @@ namespace IIR_Butterworth_C_Sharp
 
         }
 
-        
+
         //Step 5: Use Bilinear transformation to find discrete equivalent
         public void Bilinear(Matrix<Complex> a_arma_f, Matrix<Complex> b_arma_f, Matrix<Complex> c_arma_f, Matrix<Complex> d_arma_f, double fs_f, int type_filt_f)
         {
@@ -1358,7 +1423,7 @@ namespace IIR_Butterworth_C_Sharp
             {
 
                 t1_arma = Matrix<Complex>.Build.DenseIdentity(2 * temp_dim_arr_matr, 2 * temp_dim_arr_matr);
-                t1_arma_eye = Matrix<Complex>.Build.DenseIdentity(2*temp_dim_arr_matr, 2*temp_dim_arr_matr);
+                t1_arma_eye = Matrix<Complex>.Build.DenseIdentity(2 * temp_dim_arr_matr, 2 * temp_dim_arr_matr);
                 t2_arma = Matrix<Complex>.Build.DenseIdentity(2 * temp_dim_arr_matr, 2 * temp_dim_arr_matr);
                 t2_arma_eye = Matrix<Complex>.Build.DenseIdentity(2 * temp_dim_arr_matr, 2 * temp_dim_arr_matr);
                 ad_arma = Matrix<Complex>.Build.Dense(2 * temp_dim_arr_matr, 2 * temp_dim_arr_matr);
@@ -1399,15 +1464,15 @@ namespace IIR_Butterworth_C_Sharp
             {
 
                 //Initialize the vectors "num_filt" and "den_filt"
-                num_filt = new double[2*order_filt_f + 1];
-                den_filt = new double[2*order_filt_f + 1];
+                num_filt = new double[2 * order_filt_f + 1];
+                den_filt = new double[2 * order_filt_f + 1];
 
                 dim_array = 2 * temp_dim_arr_matr;
 
             }
 
             //Extract the coefficients of the denumerator
-            Complex[] coeff_pol = new Complex[temp_dim_arr_matr +1];
+            Complex[] coeff_pol = new Complex[temp_dim_arr_matr + 1];
 
             if (type_filt_f > 1)
 
@@ -1437,15 +1502,15 @@ namespace IIR_Butterworth_C_Sharp
             //Extract the coefficients of the denominator
             double w = 0;
             Wn = 2 * Math.Atan2(Wn, 4);
-            Complex [] r;
+            Complex[] r;
 
             switch (type_filt_f)
             {
 
                 case 0: // band-pass
 
-                    
-                     r = new Complex[dim_array + 1];   
+
+                    r = new Complex[dim_array + 1];
 
                     for (int kk = 0; kk < dim_array; kk++)
                     {
@@ -1513,7 +1578,7 @@ namespace IIR_Butterworth_C_Sharp
                     break;
 
                 default:
-                    
+
                     r = new Complex[dim_array + 1];
                     break;
 
@@ -1523,7 +1588,7 @@ namespace IIR_Butterworth_C_Sharp
 
             coeff_pol_num = Poly(r, dim_array);
 
-            Complex[] kern = new Complex[dim_array +1];
+            Complex[] kern = new Complex[dim_array + 1];
 
             for (int kk = 0; kk < dim_array + 1; kk++)
             {
@@ -1532,8 +1597,8 @@ namespace IIR_Butterworth_C_Sharp
 
             }
 
-            Complex temp_sum_I = new Complex(0.0,0.0);
-            Complex temp_sum_II = new Complex(0.0,0.0);
+            Complex temp_sum_I = new Complex(0.0, 0.0);
+            Complex temp_sum_II = new Complex(0.0, 0.0);
 
             for (int kk = 0; kk < dim_array + 1; kk++)
             {
@@ -1557,8 +1622,8 @@ namespace IIR_Butterworth_C_Sharp
         public bool Check_stability_iir(double[][] coeff_filt)
         {
             bool stability_flag = true;
-            
-            
+
+
             //Coefficients need to be organized in ascending order
             double[] temp_coeff_den = new double[coeff_filt[1].Length];
             for (int kk = 0; kk < coeff_filt[1].Length; kk++)
@@ -1585,12 +1650,12 @@ namespace IIR_Butterworth_C_Sharp
                 }
 
             }
-            
+
             return stability_flag;
 
         }
-        
-         //Filter the data by using the Direct-Form II Transpose, as explained in the Matlab documentation
+
+        //Filter the data by using the Direct-Form II Transpose, as explained in the Matlab documentation
         public double[] Filter_Data(double[][] coeff_filt, double[] pre_filt_signal)
         {
 
@@ -1656,6 +1721,5 @@ namespace IIR_Butterworth_C_Sharp
             return filt_signal;
 
         }
-        
     }
 }
