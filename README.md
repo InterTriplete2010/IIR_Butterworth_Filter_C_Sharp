@@ -1,4 +1,4 @@
-C# code to calculate the coefficients of the Butterworth filter
+C# code to calculate the coefficients of the Butterworth filter and to filter the data
 
 This code calculate the coefficients of the Band-pass, Band-stop, Low-pass and High-pass Butterworth filters. The file IIR_Butterworth_Main.cs can be used to test the code.
 
