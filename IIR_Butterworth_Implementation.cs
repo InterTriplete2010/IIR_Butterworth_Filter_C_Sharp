@@ -852,7 +852,15 @@ namespace IIR_Butterworth_C_Sharp
         //Estimate the coeffients of a band-pass filter and return a 2 rows x N coefficients matrix. Row 1 = Numerator; Row 2 = Denumerator
         public double[][] Lp2bp(double W_f1, double W_f2, int order_filt)
         {
+            
+            //Check that the low cut-off frequency is higher than the low cut-off frequency
+            if (W_f2 <= W_f1)
+            {
 
+                throw new Exception("The low cut-off frequency needs to be higher than the low cut-off frequency");
+
+            }
+            
             //Check that the normalized frequencies are within the correct range of values
             if (W_f1 <= 0 | W_f1 >= 1 | W_f2 <= 0 | W_f2 >= 1)
             {
@@ -1001,6 +1009,14 @@ namespace IIR_Butterworth_C_Sharp
         public double[][] Lp2bs(double W_f1, double W_f2, int order_filt)
         {
 
+            //Check that the low cut-off frequency is higher than the low cut-off frequency
+            if (W_f2 <= W_f1)
+            {
+
+                throw new Exception("The low cut-off frequency needs to be higher than the low cut-off frequency");
+
+            }
+            
             //Check that the normalized frequencies are within the correct range of values
             if (W_f1 <= 0 | W_f1 >= 1 | W_f2 <= 0 | W_f2 >= 1)
             {
