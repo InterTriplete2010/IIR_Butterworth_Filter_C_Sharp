@@ -1589,5 +1589,73 @@ namespace IIR_Butterworth_C_Sharp
             return stability_flag;
 
         }
+        
+         //Filter the data by using the Direct-Form II Transpose, as explained in the Matlab documentation
+        public double[] Filter_Data(double[][] coeff_filt, double[] pre_filt_signal)
+        {
+
+            double[] filt_signal = new double[pre_filt_signal.Length];
+            Array.Clear(filt_signal, 0, filt_signal.Length);
+
+            double[][] w_val = new double[coeff_filt[0].Length][];
+
+
+            for (int ff = 0; ff < coeff_filt[0].Length; ff++)
+            {
+
+                w_val[ff] = new double[pre_filt_signal.Length];
+
+            }
+
+
+            //Convolution product to filter the data
+            for (int kk = 0; kk < pre_filt_signal.Length; kk++)
+            {
+
+                if (kk == 0)
+                {
+
+                    filt_signal[kk] = pre_filt_signal[kk] * coeff_filt[0][0];
+
+
+                    for (int ww = 1; ww < coeff_filt[0].Length; ww++)
+                    {
+
+                        w_val[ww - 1][kk] = pre_filt_signal[kk] * coeff_filt[0][ww] - filt_signal[kk] * coeff_filt[1][ww];
+
+
+                    }
+
+                }
+
+                else
+                {
+
+                    filt_signal[kk] = pre_filt_signal[kk] * coeff_filt[0][0] + w_val[0][kk - 1];
+
+                    for (int ww = 1; ww < coeff_filt[0].Length; ww++)
+                    {
+
+                        w_val[ww - 1][kk] = pre_filt_signal[kk] * coeff_filt[0][ww] + w_val[ww][kk - 1] - filt_signal[kk] * coeff_filt[1][ww];
+
+                        if (ww == coeff_filt[0].Length - 1)
+                        {
+
+                            w_val[ww - 1][kk] = pre_filt_signal[kk] * coeff_filt[0][ww] - filt_signal[kk] * coeff_filt[1][ww];
+
+                        }
+
+                    }
+
+                }
+
+
+
+            }
+
+            return filt_signal;
+
+        }
+        
     }
 }
