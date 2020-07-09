@@ -1621,12 +1621,14 @@ namespace IIR_Butterworth_C_Sharp
 
             }
 
-            Complex temp_sum_I = new Complex(0.0, 0.0);
-            Complex temp_sum_II = new Complex(0.0, 0.0);
+            Complex temp_sum_I;
+            Complex temp_sum_II;
 
             for (int kk = 0; kk < dim_array + 1; kk++)
             {
 
+                temp_sum_I = new Complex(0.0, 0.0);
+                temp_sum_II = new Complex(0.0, 0.0);
 
                 for (int hh = 0; hh < dim_array + 1; hh++)
                 {
