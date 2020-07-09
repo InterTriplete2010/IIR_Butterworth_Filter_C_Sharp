@@ -2,7 +2,7 @@ C# code to calculate the coefficients of the Butterworth filter and to filter th
 
 This code calculates the coefficients of the Band-pass, Band-stop, Low-pass and High-pass Butterworth filters.  It also filters the data, but no zero-phase delay is applied.
 
-Each filter function will return a 2 rows x N coefficients 2D vector, where Row 1 = Numerator and Row 2 = Denumerator. The method "Check_stability_iir" can be used to check the stability of the filter. Please, keep in mind that if the filter is unstable, numerical instability leading to numerical overflow might happen. If that situation occurs, the program might assign a default value of 10^10 at the denominator.
+Each filter function will return a 2 rows x N coefficients 2D vector, where Row 1 = Numerator and Row 2 = Denumerator. The method "Check_stability_iir" can be used to check the stability of the filter. Please, keep in mind that if the filter is unstable, numerical instability leading to numerical overflow might happen when the order selected is extremely high. If that situation occurs, the program might assign a default value of 10^10 at the denominator.
 
 1) Band-pass: the function is "double[][] Lp2bp(double W_f1, double W_f2, int order_filt)". The first two arguments are the normalized two cut-off frequencies (f1/SF, f2/SF), which means that the cutoff frequencies must be within the interval of (0,1) and the last argument is the order;
 
