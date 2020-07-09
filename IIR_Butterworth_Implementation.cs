@@ -244,15 +244,7 @@ namespace IIR_Butterworth_C_Sharp
                 } while (yy <= ll);
 
             }
-
-            //Make sure that only the real part is saved
-            for (int kk = 0; kk < coeff_pol_f.Length; kk++)
-            {
-
-                coeff_pol_f[kk] = coeff_pol_f[kk].Real;
-
-            }
-
+            
             return coeff_pol_f;
         }
 
