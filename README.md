@@ -17,3 +17,5 @@ Each filter function will return a 2 rows x N coefficients 2D vector, where Row 
 6) Filter the data: the method is "double[] Filter_Data(double[][] coeff_filt, double[] pre_filt_signal)". The two arguments are the filter coefficients and the signal to be filtered. It returns the filtered signal.
 
 This code has been written following the Matlab code, so the arguments of each function reflect the arguments that you should pass to the equivalent functions in Matlab. I tried to be consistent with the names of the functions, in case someone wants to compare this code with Matlab code. The only exception is the function Check_stability_iir, which is not present in Matlab. 
+
+If you have any question and/or want to report bugs, please e-mail me (Alex) at: pressalex@hotmail.com
