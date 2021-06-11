@@ -1,6 +1,6 @@
 C# code to calculate the coefficients of the Butterworth filter and to filter the data
 
-This code calculates the coefficients of the Band-pass, Band-stop, Low-pass and High-pass Butterworth filters.  It also filters the data, but no zero-phase delay is applied.
+This code calculates the coefficients of the Band-pass, Band-stop, Low-pass and High-pass Butterworth filters.  It also filters the data, but no zero-phase delay is applied. namespace IIR_Butterworth_C_Sharp.
 
 Each filter function will return a 2 rows x N coefficients 2D vector, where Row 1 = Numerator and Row 2 = Denumerator. The method "Check_stability_iir" can be used to check the stability of the filter. Please, keep in mind that if the filter is unstable, numerical instability leading to numerical overflow might happen when the order selected is extremely high. If that situation occurs, the program might assign a default value of 10^10 at the denominator.
 
