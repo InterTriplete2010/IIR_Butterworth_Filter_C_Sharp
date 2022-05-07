@@ -222,7 +222,7 @@ namespace IIR_Butterworth_C_Sharp
         }
 
          //Step 4: Transform to state-space
-        //Intermidiate step: calculate the coefficients of the polynomial (based on Matlab code)
+        //Intermediate step: calculate the coefficients of the polynomial (based on Matlab code)
         public Complex[] Poly(Complex[] temp_array_poly, int col_poly)
         {
 
@@ -449,7 +449,7 @@ namespace IIR_Butterworth_C_Sharp
         }
 
 
-        //Intermidiate step: calculate the coefficients of the polynomial (Bernard Brooks' paper (2016))
+        //Intermediate step: calculate the coefficients of the polynomial (Bernard Brooks' paper (2016))
         public Complex[] Char_poly(Complex temp_matr_poly, int row_col)
         {
 
