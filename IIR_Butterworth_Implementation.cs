@@ -1125,8 +1125,8 @@ namespace IIR_Butterworth_C_Sharp
 
             a_arma_pinv = (Wn / q) * (a_arma_pinv.PseudoInverse());
 
-            a_b_arma_temp = (Wn) * (a_arma_pinv * b_arma_temp) / q;
-            c_a_arma_temp = c_arma_temp * a_arma_pinv;
+            a_b_arma_temp = a_arma_pinv * b_arma_temp;
+            c_a_arma_temp = c_arma_temp * a.PseudoInverse();
 
             for (int kk = 0; kk < 2 * temp_dim_arr_matr; kk++)
             {
@@ -1174,7 +1174,7 @@ namespace IIR_Butterworth_C_Sharp
 
             }
 
-            d_arma = d + c_a_arma_temp * b_arma_temp;
+            d_arma = d - c_a_arma_temp * b_arma_temp;
 
             //Step 5: Use Bilinear transformation to find discrete equivalent
             Bilinear(a_arma, b_arma, c_arma, d_arma, fs, type_filt);
